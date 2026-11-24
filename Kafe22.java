@@ -18,6 +18,35 @@ public class Kafe22 {
 
         menu(namaPelanggan, isMember, jamKunjung);
 
+        int totalBayar = 0;
+        String lagi;
+
+        do {
+            System.out.print("\nMasukkan nomor menu yang ingin Anda pesan (1-6): ");
+            int pilihanMenu = sc.nextInt();
+
+            if (pilihanMenu < 1 || pilihanMenu > 6) {
+                System.out.println("Menu tidak tersedia");
+            } else {
+                System.out.print("Masukkan jumlah item yang ingin dipesan: ");
+                int banyakItem = sc.nextInt();
+                totalBayar += hitungTotalHarga22(pilihanMenu, banyakItem);
+            }
+
+            System.out.print("Pesan menu lain? (y/n): ");
+            lagi = sc.next();
+        } while (lagi.equalsIgnoreCase("y"));
+
+        System.out.print("Masukkan kode promo: ");
+        String kodePromo = sc.next();
+
+        int diskon = hitungDiskon(totalBayar, kodePromo, isMember);
+
+        System.out.println("\n===== RINGKASAN PESANAN =====");
+        System.out.println("Total harga     : Rp" + totalBayar);
+        System.out.println("Diskon          : Rp" + diskon);
+        System.out.println("Total dibayar   : Rp" + (totalBayar - diskon));
+
         sc.close();
     }
 
@@ -41,4 +70,28 @@ public class Kafe22 {
         System.out.println("===========================");
         System.out.println("Silakan pilih menu yang Anda inginkan.");
     }
+
+    public static int hitungTotalHarga22(int pilihanMenu, int banyakItem) {
+        int[] hargaItems = {15000, 20000, 22000, 12000, 10000, 18000};
+
+        int hargaTotal = hargaItems[pilihanMenu - 1] * banyakItem;
+        return hargaTotal;
+    }
+
+    public static int hitungDiskon(int total, String kodePromo, boolean isMember) {
+        int persen = 0;
+
+        if (kodePromo.equals("DISKON50")) {
+            persen = 50;
+        } else if (kodePromo.equals("DISKON30")) {
+            persen = 30;
+        } else {
+            System.out.println("Kode promo invalid");
+        }
+
+        if (isMember) {
+            persen += 10;   
+        }
+
+        return total * persen / 100;  
 }
