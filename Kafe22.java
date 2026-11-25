@@ -37,7 +37,7 @@ public class Kafe22 {
             lagi = sc.next();
         } while (lagi.equalsIgnoreCase("y"));
 
-        System.out.print("Masukkan kode promo: ");
+        System.out.print("Masukkan kode promo: ");  
         String kodePromo = sc.next();
 
         int diskon = hitungDiskon(totalBayar, kodePromo, isMember);
@@ -94,4 +94,5 @@ public class Kafe22 {
         }
 
         return total * persen / 100;  
+}
 }
